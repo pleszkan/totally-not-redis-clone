@@ -1,0 +1,19 @@
+# Build output
+x64/
+Debug/
+Release/
+build/
+*.exe
+*.obj
+*.o
+*.ilk
+*.pdb
+
+# Visual Studio / VS Code
+.vs/
+*.user
+*.vcxproj.user
+.vscode/
+
+# Sanitizer / misc
+*.log

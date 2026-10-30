@@ -5,7 +5,6 @@
 #include "Command.h"
 
 namespace kv {
-
 	static std::vector<std::string> split_input(const std::string& command) {
 		std::vector<std::string> output;
 		std::istringstream iss(command);
@@ -21,20 +20,40 @@ namespace kv {
 		auto input = split_input(line);
 		if (input.empty()) return Command{ .type = CommandType::Empty };
 
-		if (input[0] == "SET" && input.size() == 3) {
-			return Command{ .type = CommandType::Set, .key = input[1], .value = input[2] };
+		if (input[0] == "SET") {
+			if (input.size() == 3) {
+				return Command{ .type = CommandType::Set, .key = input[1], .value = input[2] };
+			}
+			else {
+				throw ParseError{ "Wrong number of arguments" };
+			}
 		}
 
-		if (input[0] == "GET" && input.size() == 2) {
-			return Command{ .type = CommandType::Get, .key = input[1] };
+		if (input[0] == "GET") {
+			if (input.size() == 2) {
+				return Command{ .type = CommandType::Get, .key = input[1] };
+			}
+			else {
+				throw ParseError{ "Wrong number of arguments" };
+			}
 		}
 
-		if (input[0] == "DEL" && input.size() == 2) {
-			return Command{ .type = CommandType::Del, .key = input[1] };
+		if (input[0] == "DEL") {
+			if (input.size() == 2) {
+				return Command{ .type = CommandType::Del, .key = input[1] };
+			}
+			else {
+				throw ParseError{ "Wrong number of arguments" };
+			}
 		}
 
-		if (input[0] == "EXIT" && input.size() == 1) {
-			return Command{ .type = CommandType::Exit };
+		if (input[0] == "EXIT") {
+			if (input.size() == 1) {
+				return Command{ .type = CommandType::Exit };
+			}
+			else {
+				throw ParseError{ "Wrong number of arguments" };
+			}
 		}
 
 		return Command{ .type = CommandType::Unknown };
@@ -43,7 +62,7 @@ namespace kv {
 	Result execute(const Command& command, std::unordered_map<std::string, std::string>& map) {
 		if (command.type == CommandType::Set) {
 			map[command.key] = command.value;
-			return Result{ .ok = true, .msg = "OK\n"};
+			return Result{ .ok = true, .msg = "OK\n" };
 		}
 
 		if (command.type == CommandType::Get) {

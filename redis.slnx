@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="redis/redis.vcxproj" />
+  <Project Path="redis/redis.vcxproj" Id="daeff6f5-f437-4a6c-aaf9-9689c4ff7ca0" />
 </Solution>

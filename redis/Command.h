@@ -1,8 +1,15 @@
 #pragma once
 #include <string>
 #include <unordered_map>
+#include <stdexcept>
 
 namespace kv {
+	class ParseError : public std::runtime_error {
+	public:
+		ParseError(char const* const message) throw() : std::runtime_error(message) {
+		};
+	};
+
 	enum class CommandType {
 		Set, Get, Del, Exit, Unknown, Empty
 	};

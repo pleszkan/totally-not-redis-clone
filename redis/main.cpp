@@ -15,12 +15,18 @@ int main() {
 
 	std::cout << ">> ";
 	while (std::getline(std::cin, command)) {
-		kv::Command c = kv::parse(command);
-		if (c.type == kv::CommandType::Exit) {
-			break;
+		try {
+			kv::Command c = kv::parse(command);
+			if (c.type == kv::CommandType::Exit) {
+				break;
+			}
+			auto [ok, msg] = kv::execute(c, kv::memory_map);
+			std::cout << (ok ? "" : "ERR ") << msg;
 		}
-		auto [ok, msg] = kv::execute(c, kv::memory_map);
-		std::cout << (ok ? "" : "ERR ") << msg;
+		catch (kv::ParseError& err) {
+			std::cout << err.what() << std::endl;
+		}
+
 		std::cout << ">> ";
 	}
 }
